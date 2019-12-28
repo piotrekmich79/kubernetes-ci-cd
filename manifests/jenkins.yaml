@@ -84,7 +84,7 @@ spec:
 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: jenkins
@@ -93,6 +93,9 @@ metadata:
 spec:
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      app: jenkins
   template:
     metadata:
       labels:
@@ -101,7 +104,7 @@ spec:
     spec:
       serviceAccountName: jenkins
       initContainers:
-      - image: lachlanevenson/k8s-kubectl:v1.11.2
+      - image: lachlanevenson/k8s-kubectl:latest
         name: kubectl-config
         command:
         - "/bin/sh"
